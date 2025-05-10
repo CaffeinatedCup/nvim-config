@@ -52,6 +52,7 @@
 
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, ... }@inputs: let
+    nvim-config = self;
     inherit (inputs.nixCats) utils;
     luaPath = "${./.}";
     # this is flake-utils eachSystem
