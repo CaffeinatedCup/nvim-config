@@ -1,8 +1,3 @@
-local catUtils = require('nixCatsUtils')
-if (catUtils.isNixCats and nixCats('lspDebugMode')) then
-  vim.lsp.set_log_level("debug")
-end
-
 -- NOTE: This file uses lzextras.lsp handler https://github.com/BirdeeHub/lzextras?tab=readme-ov-file#lsp-handler
 -- This is a slightly more performant fallback function
 -- for when you don't provide a filetype to trigger on yourself.
@@ -38,19 +33,7 @@ require('lze').load {
       })
     end,
   },
-  {
-    "mason.nvim",
-    -- only run it when not on nix
-    enabled = not catUtils.isNixCats,
-    on_plugin = { "nvim-lspconfig" },
-    load = function(name)
-      vim.cmd.packadd(name)
-      vim.cmd.packadd("mason-lspconfig.nvim")
-      require('mason').setup()
-      -- auto install will make it install servers when lspconfig is called on them.
-      require('mason-lspconfig').setup { automatic_installation = true, }
-    end,
-  },
+  ,
   {
     -- lazydev makes your lsp way better in your config without needing extra lsp configuration.
     "lazydev.nvim",
