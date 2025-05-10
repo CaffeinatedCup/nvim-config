@@ -18,4 +18,5 @@ and the lua/myLuaConf/non_nix_download.lua file.
 the rest is just example of how to configure nvim making use of various
 features of nixCats and using the plugin lze for lazy loading.
 --]]
+require('nixCats').init_main
 require('myLuaConf')
