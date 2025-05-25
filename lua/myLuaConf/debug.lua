@@ -1,6 +1,11 @@
 require('lze').load {
   {
     "nvim-dap",
+    -- NOTE: I dont want to figure out mason tools installer for this, so I only enabled debug if nix loaded config
+    for_cat = { cat = 'debug', default = false },
+    -- cmd = { "" },
+    -- event = "",
+    -- ft = "",
     keys = {
       { "<F5>", desc = "Debug: Start/Continue" },
       { "<F1>", desc = "Debug: Step Into" },
@@ -11,7 +16,11 @@ require('lze').load {
       { "<F7>", desc = "Debug: See last session result." },
     },
     -- colorscheme = "",
-    load = function(name)
+    load = (require('nixCatsUtils').isNixCats and function(name)
+      vim.cmd.packadd(name)
+      vim.cmd.packadd("nvim-dap-ui")
+      vim.cmd.packadd("nvim-dap-virtual-text")
+    end) or function(name)
       vim.cmd.packadd(name)
       vim.cmd.packadd("nvim-dap-ui")
       vim.cmd.packadd("nvim-dap-virtual-text")
