@@ -314,7 +314,7 @@
     packageDefinitions = {
       # the name here is the name of the package
       # and also the default command name for it.
-      nixCats = { pkgs, name, ... }@misc: {
+      nvim = { pkgs, name, ... }@misc: {
         # these also recieve our pkgs variable
         # see :help nixCats.flake.outputs.packageDefinitions
         settings = {
