@@ -370,7 +370,7 @@
       };
     };
 
-    defaultPackageName = "nixCats";
+    defaultPackageName = "nvim";
     # I did not here, but you might want to create a package named nvim.
 
     # defaultPackageName is also passed to utils.mkNixosModules and utils.mkHomeModules
