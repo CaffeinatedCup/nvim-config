@@ -104,6 +104,14 @@
           go-tools
           gccgo
         ];
+        rust = with pkgs; [
+          rust-analyzer
+          cargo
+          rustc
+          rustfmt
+          clippy
+
+        ];
         # and easily check if they are included in lua
         format = with pkgs; [
         ];
@@ -131,6 +139,7 @@
           ];
           extra = [
             oil-nvim
+            harpoon2
             nvim-web-devicons
           ];
         };
@@ -146,6 +155,7 @@
               "tokyonight" = tokyonight-nvim;
               "tokyonight-day" = tokyonight-nvim;
               "tokyonight-night" = tokyonight-nvim;
+              "kanagawa-wave" = kanagawa-nvim;
             }
           );
           # This is obviously a fairly basic usecase for this, but still nice.
@@ -356,7 +366,7 @@
           # you could also pass something else:
           # see :help nixCats
           themer = true;
-          colorscheme = "tokyonight-night";
+          colorscheme = "kanagawa-wave";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass

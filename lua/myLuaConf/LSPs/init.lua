@@ -102,6 +102,13 @@ require('lze').load {
     },
   },
   {
+    "rust-analyzer",
+    for_cat = "rust",
+    lsp = {
+      filetypes = { "rs" },
+    },
+  },
+  {
     "rnix",
     -- mason doesn't have nixd
     enabled = not catUtils.isNixCats,
