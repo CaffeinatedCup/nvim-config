@@ -110,7 +110,12 @@
           rustc
           rustfmt
           clippy
-
+        ];
+        python = with pkgs; [
+          pyright
+        ];
+        c = with pkgs; [
+          clang-tools
         ];
         # and easily check if they are included in lua
         format = with pkgs; [
@@ -355,6 +360,10 @@
           test = {
             subtest1 = true;
           };
+
+          rust = true;
+          python = true;
+          c = true;
 
           # enabling this category will enable the go category,
           # and ALSO debug.go and debug.default due to our extraCats in categoryDefinitions.

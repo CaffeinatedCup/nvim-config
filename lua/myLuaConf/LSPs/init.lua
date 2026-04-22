@@ -22,7 +22,7 @@ end)
 require('lze').load {
   {
     "nvim-lspconfig",
-    for_cat = "general.core",
+    for_cat = "general",
     on_require = { "lspconfig" },
     -- NOTE: define a function for lsp,
     -- and it will run for all specs with type(plugin.lsp) == table
@@ -91,7 +91,21 @@ require('lze').load {
     "rust-analyzer",
     for_cat = "rust",
     lsp = {
-      filetypes = { "rs" },
+      filetypes = { "rust" },
+    },
+  },
+  {
+    "pyright",
+    for_cat = "python",
+    lsp = {
+      filetypes = { "python" },
+    },
+  },
+  {
+    "clangd",
+    for_cat = "c",
+    lsp = {
+      filetypes = { "c", "cpp", "objc", "objcpp" },
     },
   },
   {
