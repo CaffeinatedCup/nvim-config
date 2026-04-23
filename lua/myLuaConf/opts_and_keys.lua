@@ -100,6 +100,22 @@ vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer
 vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
 vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
 
+local runners = {
+  python = function() return vim.g.python3_host_prog .. ' ' .. vim.fn.expand('%') end,
+  rust   = function() return 'cargo run' end,
+  c      = function() return 'make' end,
+  lua    = function() return 'lua ' .. vim.fn.expand('%') end,
+}
+
+vim.keymap.set('n', '<leader>r', function()
+  local runner = runners[vim.bo.filetype]
+  if runner then
+    vim.cmd('botright split | terminal ' .. runner())
+  end
+end, { desc = 'Run file' })
+
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
 -- see help sticky keys on windows
 vim.cmd([[command! W w]])
 vim.cmd([[command! Wq wq]])

@@ -73,7 +73,20 @@
     # see :help nixCats.flake.outputs.categories
     # and
     # :help nixCats.flake.outputs.categoryDefinitions.scheme
-    categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
+    categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: let
+      dudraw = pkgs.python3Packages.buildPythonPackage rec {
+        pname = "dudraw";
+        version = "1.10.1";
+        pyproject = true;
+        src = pkgs.fetchPypi {
+          inherit pname version;
+          sha256 = "sha256-NQCoqOBokjw30XVW2xoSynnTIpm+kifblXFatFhZ8V8=";
+        };
+        nativeBuildInputs = [ pkgs.python3Packages.hatchling ];
+        propagatedBuildInputs = [ pkgs.python3Packages.pygame ];
+      };
+      python3WithDudraw = pkgs.python3.withPackages (ps: [ dudraw ps.pygame ]);
+    in {
       # to define and use a new category, simply add a new list to a set here, 
       # and later, you will include categoryname = true; in the set you
       # provide when you build the package using this builder function.
@@ -113,6 +126,7 @@
         ];
         python = with pkgs; [
           pyright
+          python3WithDudraw
         ];
         c = with pkgs; [
           clang-tools
@@ -288,6 +302,7 @@
       # or run from nvim terminal via :!<packagename>-python3
       python3.libraries = {
         test = (_:[]);
+        python = (_: [ dudraw ]);
       };
       # populates $LUA_PATH and $LUA_CPATH
       extraLuaPackages = {
