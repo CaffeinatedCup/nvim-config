@@ -29,14 +29,8 @@ vim.wo.number = true
 vim.o.mouse = 'a'
 
 -- Indent
--- vim.o.smarttab = true
 vim.opt.cpoptions:append('I')
 vim.o.expandtab = true
--- vim.o.smartindent = true
--- vim.o.autoindent = true
--- vim.o.tabstop = 4
--- vim.o.softtabstop = 4
--- vim.o.shiftwidth = 4
 
 -- stops line wrapping from being confusing
 vim.o.breakindent = true
@@ -133,15 +127,6 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 
--- kickstart.nvim starts you with this. 
--- But it constantly clobbers your system clipboard whenever you delete anything.
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
--- vim.o.clipboard = 'unnamedplus'
-
--- You should instead use these keybindings so that they are still easy to use, but dont conflict
 vim.keymap.set({"v", "x", "n"}, '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Yank to clipboard' })
 vim.keymap.set({"n", "v", "x"}, '<leader>Y', '"+yy', { noremap = true, silent = true, desc = 'Yank line to clipboard' })
 vim.keymap.set({"n", "v", "x"}, '<C-a>', 'gg0vG$', { noremap = true, silent = true, desc = 'Select all' })

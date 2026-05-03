@@ -15,14 +15,7 @@ if ok then
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
 
--- NOTE: you can check if you included the category with the thing wherever you want.
 if nixCats('general.extra') then
-  -- I didnt want to bother with lazy loading this.
-  -- I could put it in opt and put it in a spec anyway
-  -- and then not set any handlers and it would load at startup,
-  -- but why... I guess I could make it load
-  -- after the other lze definitions in the next call using priority value?
-  -- didnt seem necessary.
   vim.g.loaded_netrwPlugin = 1
   require("oil").setup({
     default_file_explorer = true,
@@ -56,19 +49,27 @@ if nixCats('general.extra') then
   })
   vim.keymap.set("n", "-", "<cmd>Oil<CR>", { noremap = true, desc = 'Open Parent Directory' })
   vim.keymap.set("n", "<leader>-", "<cmd>Oil .<CR>", { noremap = true, desc = 'Open nvim root directory' })
+
+  local harpoon = require("harpoon")
+  harpoon:setup()
+  vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end,                              { desc = "Harpoon add file" })
+  vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,      { desc = "Harpoon menu" })
+  vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end,                          { desc = "Harpoon file 1" })
+  vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end,                          { desc = "Harpoon file 2" })
+  vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end,                          { desc = "Harpoon file 3" })
+  vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end,                          { desc = "Harpoon file 4" })
+  vim.keymap.set("n", "<leader>h[", function() harpoon:list():prev() end,                             { desc = "Harpoon prev" })
+  vim.keymap.set("n", "<leader>h]", function() harpoon:list():next() end,                             { desc = "Harpoon next" })
 end
 
 require('lze').load {
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
   { import = "myLuaConf.plugins.completion", },
+  { import = "myLuaConf.plugins.latex", },
+  { import = "myLuaConf.plugins.claudecode", },
   {
     "markdown-preview.nvim",
-    -- NOTE: for_cat is a custom handler that just sets enabled value for us,
-    -- based on result of nixCats('cat.name') and allows us to set a different default if we wish
-    -- it is defined in luaUtils template in lua/nixCatsUtils/lzUtils.lua
-    -- you could replace this with enabled = nixCats('cat.name') == true
-    -- if you didnt care to set a different default for when not using nix than the default you already set
     for_cat = 'general.markdown',
     cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
     ft = "markdown",
@@ -111,7 +112,6 @@ require('lze').load {
     "nvim-surround",
     for_cat = 'general.always',
     event = "DeferredUIEnter",
-    -- keys = "",
     after = function(plugin)
       require('nvim-surround').setup()
     end,
@@ -130,35 +130,15 @@ require('lze').load {
     "fidget.nvim",
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
-    -- keys = "",
     after = function(plugin)
       require('fidget').setup({})
     end,
   },
-  -- {
-  --   "hlargs",
-  --   for_cat = 'general.extra',
-  --   event = "DeferredUIEnter",
-  --   -- keys = "",
-  --   dep_of = { "nvim-lspconfig" },
-  --   after = function(plugin)
-  --     require('hlargs').setup {
-  --       color = '#32a88f',
-  --     }
-  --     vim.cmd([[hi clear @lsp.type.parameter]])
-  --     vim.cmd([[hi link @lsp.type.parameter Hlargs]])
-  --   end,
-  -- },
   {
     "lualine.nvim",
     for_cat = 'general.always',
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function (plugin)
-
       require('lualine').setup({
         options = {
           icons_enabled = false,
@@ -183,8 +163,6 @@ require('lze').load {
         },
         tabline = {
           lualine_a = { 'buffers' },
-          -- if you use lualine-lsp-progress, I have mine here instead of fidget
-          -- lualine_b = { 'lsp_progress', },
           lualine_z = { 'tabs' }
         },
       })
@@ -194,13 +172,8 @@ require('lze').load {
     "gitsigns.nvim",
     for_cat = 'general.always',
     event = "DeferredUIEnter",
-    -- cmd = { "" },
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function (plugin)
       require('gitsigns').setup({
-        -- See `:help gitsigns.txt`
         signs = {
           add = { text = '+' },
           change = { text = '~' },
@@ -277,11 +250,7 @@ require('lze').load {
   {
     "which-key.nvim",
     for_cat = 'general.extra',
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     after = function (plugin)
       require('which-key').setup({
       })
@@ -292,8 +261,14 @@ require('lze').load {
         { "<leader>c_", hidden = true },
         { "<leader>d", group = "[d]ocument" },
         { "<leader>d_", hidden = true },
+        { "<leader>a", group = "[a]i" },
+        { "<leader>a_", hidden = true },
         { "<leader>g", group = "[g]it" },
         { "<leader>g_", hidden = true },
+        { "<leader>h", group = "[h]arpoon" },
+        { "<leader>h_", hidden = true },
+        { "<leader>l", group = "[l]atex" },
+        { "<leader>l_", hidden = true },
         { "<leader>m", group = "[m]arkdown" },
         { "<leader>m_", hidden = true },
         { "<leader>r", group = "[r]ename" },

@@ -134,6 +134,10 @@
         # and easily check if they are included in lua
         format = with pkgs; [
         ];
+        latex = with pkgs; [
+          texlab
+          zathura
+        ];
         neonixdev = {
           # also you can do this.
           inherit (pkgs) nix-doc lua-language-server nixd;
@@ -206,6 +210,9 @@
         ];
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
+        ];
+        latex = with pkgs.vimPlugins; [
+          vimtex
         ];
         neonixdev = with pkgs.vimPlugins; [
           lazydev-nvim
@@ -368,6 +375,7 @@
         # enable the categories you want from categoryDefinitions
         categories = {
           markdown = true;
+          latex = true;
           general = true;
           lint = true;
           format = true;

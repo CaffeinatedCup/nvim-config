@@ -18,7 +18,7 @@ return {
   {
     "luasnip",
     for_cat = "general.blink",
-    dep_of = { "blink.cmp" },
+    dep_of = { "blink.cmp", "vimtex" },
     after = function (_)
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
