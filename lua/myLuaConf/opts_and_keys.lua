@@ -1,6 +1,7 @@
 -- NOTE: These 2 need to be set up before any plugins are loaded.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.tex_flavor = 'latex'
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
