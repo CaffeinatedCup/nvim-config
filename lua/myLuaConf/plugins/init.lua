@@ -60,6 +60,27 @@ if nixCats('general.extra') then
   vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end,                          { desc = "Harpoon file 4" })
   vim.keymap.set("n", "<leader>h[", function() harpoon:list():prev() end,                             { desc = "Harpoon prev" })
   vim.keymap.set("n", "<leader>h]", function() harpoon:list():next() end,                             { desc = "Harpoon next" })
+
+  local alpha = require('alpha')
+  local dashboard = require('alpha.themes.dashboard')
+  dashboard.section.header.val = {
+    " /$$    /$$ /$$$$$$ /$$      /$$ /$$$$$$$   /$$$$$$  /$$$$$$$  /$$$$$$$$",
+    "| $$   | $$|_  $$_/| $$$    /$$$| $$__  $$ /$$__  $$| $$__  $$| $$_____/",
+    "| $$   | $$  | $$  | $$$$  /$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$      ",
+    "|  $$ / $$/  | $$  | $$ $$/$$ $$| $$$$$$$/| $$  | $$| $$$$$$$/| $$$$$   ",
+    " \\  $$ $$/   | $$  | $$  $$$| $$| $$____/ | $$  | $$| $$__  $$| $$__/   ",
+    "  \\  $$$/    | $$  | $$\\  $ | $$| $$      | $$  | $$| $$  \\ $$| $$      ",
+    "   \\  $/    /$$$$$$| $$ \\/  | $$| $$      |  $$$$$$/| $$  | $$| $$$$$$$$",
+    "    \\_/    |______/|__/     |__/|__/       \\______/ |__/  |__/|________/",
+  }
+  dashboard.section.buttons.val = {
+    dashboard.button("f", "  Find File",    "<cmd>Telescope find_files<CR>"),
+    dashboard.button("r", "  Recent Files", "<cmd>Telescope oldfiles<CR>"),
+    dashboard.button("g", "  Live Grep",    "<cmd>Telescope live_grep<CR>"),
+    dashboard.button("e", "  New File",     "<cmd>enew<CR>"),
+    dashboard.button("q", "  Quit",         "<cmd>qa<CR>"),
+  }
+  alpha.setup(dashboard.config)
 end
 
 require('lze').load {

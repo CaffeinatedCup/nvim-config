@@ -159,11 +159,13 @@
             vim-repeat
             plenary-nvim
             nvim-notify
+            direnv-vim
           ];
           extra = [
             oil-nvim
             harpoon2
             nvim-web-devicons
+            alpha-nvim
           ];
         };
         # You can retreive information from the
