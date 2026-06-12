@@ -104,6 +104,52 @@ require('lze').load {
     end,
   },
   {
+    "obsidian.nvim",
+    for_cat = 'obsidian',
+    ft = "markdown",
+    cmd = { "ObsidianBacklinks", "ObsidianDailies", "ObsidianExtractNote",
+      "ObsidianFollowLink", "ObsidianLink", "ObsidianLinkNew", "ObsidianLinks",
+      "ObsidianNew", "ObsidianNewFromTemplate", "ObsidianOpen", "ObsidianPasteImg",
+      "ObsidianQuickSwitch", "ObsidianRename", "ObsidianSearch", "ObsidianTags",
+      "ObsidianTemplate", "ObsidianToday", "ObsidianToggleCheckbox",
+      "ObsidianTomorrow", "ObsidianTOC", "ObsidianYesterday" },
+    keys = {
+      { "<leader>ob", "<cmd>ObsidianBacklinks<CR>",   mode = { "n" }, desc = "Obsidian backlinks" },
+      { "<leader>od", "<cmd>ObsidianToday<CR>",       mode = { "n" }, desc = "Obsidian daily note" },
+      { "<leader>ol", "<cmd>ObsidianLinks<CR>",       mode = { "n" }, desc = "Obsidian note links" },
+      { "<leader>oo", "<cmd>ObsidianOpen<CR>",        mode = { "n" }, desc = "Open in Obsidian" },
+      { "<leader>of", "<cmd>ObsidianQuickSwitch<CR>", mode = { "n" }, desc = "Find note in vault" },
+      { "<leader>ot", "<cmd>ObsidianTemplate<CR>",    mode = { "n" }, desc = "Insert Obsidian template" },
+      { "<leader>oT", "<cmd>ObsidianTOC<CR>",         mode = { "n" }, desc = "Obsidian table of contents" },
+    },
+    before = function(_)
+      local group = vim.api.nvim_create_augroup("obsidian-markdown", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = group, pattern = "markdown",
+        callback = function(args)
+          require("myLuaConf.plugins.obsidian").setup_markdown_buffer(args.buf)
+        end,
+      })
+    end,
+    after = function(_)
+      -- obsidian's blink completion (register_providers/inject_sources) requires
+      -- blink.cmp to already be loaded + configured. blink normally loads on
+      -- DeferredUIEnter, which can race when opening nvim directly on a markdown
+      -- file, so force it to load now before wiring obsidian's sources.
+      pcall(require('lze').trigger_load, "blink.cmp")
+      local oh = require("myLuaConf.plugins.obsidian")
+      require("obsidian").setup(oh.opts())
+    end,
+  },
+  {
+    "render-markdown.nvim",
+    for_cat = 'obsidian',
+    ft = "markdown",
+    after = function(_)
+      require("render-markdown").setup({})
+    end,
+  },
+  {
     "undotree",
     for_cat = 'general.extra',
     cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
@@ -280,7 +326,7 @@ require('lze').load {
         { "<leader><leader>_", hidden = true },
         { "<leader>c", group = "[c]ode" },
         { "<leader>c_", hidden = true },
-        { "<leader>d", group = "[d]ocument" },
+        { "<leader>d", group = "[d]ebug" },
         { "<leader>d_", hidden = true },
         { "<leader>a", group = "[a]i" },
         { "<leader>a_", hidden = true },
@@ -292,6 +338,8 @@ require('lze').load {
         { "<leader>l_", hidden = true },
         { "<leader>m", group = "[m]arkdown" },
         { "<leader>m_", hidden = true },
+        { "<leader>o", group = "[o]bsidian" },
+        { "<leader>o_", hidden = true },
         { "<leader>r", group = "[r]ename" },
         { "<leader>r_", hidden = true },
         { "<leader>s", group = "[s]earch" },

@@ -3,13 +3,13 @@ require('lze').load {
     "nvim-dap",
     for_cat = { cat = 'debug', default = false },
     keys = {
-      { "<F5>", desc = "Debug: Start/Continue" },
-      { "<F1>", desc = "Debug: Step Into" },
-      { "<F2>", desc = "Debug: Step Over" },
-      { "<F3>", desc = "Debug: Step Out" },
-      { "<leader>b", desc = "Debug: Toggle Breakpoint" },
-      { "<leader>B", desc = "Debug: Set Breakpoint" },
-      { "<F7>", desc = "Debug: See last session result." },
+      { "<leader>dc", desc = "Debug: Start/Continue" },
+      { "<leader>di", desc = "Debug: Step Into" },
+      { "<leader>do", desc = "Debug: Step Over" },
+      { "<leader>dO", desc = "Debug: Step Out" },
+      { "<leader>db", desc = "Debug: Toggle Breakpoint" },
+      { "<leader>dB", desc = "Debug: Conditional Breakpoint" },
+      { "<leader>du", desc = "Debug: Toggle UI" },
     },
     load = function(name)
       vim.cmd.packadd(name)
@@ -21,16 +21,16 @@ require('lze').load {
       local dapui = require 'dapui'
 
       -- Basic debugging keymaps, feel free to change to your liking!
-      vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-      vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-      vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-      vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
-      vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-      vim.keymap.set('n', '<leader>B', function()
+      vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'Debug: Start/Continue' })
+      vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
+      vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
+      vim.keymap.set('n', '<leader>dO', dap.step_out, { desc = 'Debug: Step Out' })
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+      vim.keymap.set('n', '<leader>dB', function()
         dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end, { desc = 'Debug: Set Breakpoint' })
+      end, { desc = 'Debug: Conditional Breakpoint' })
 
-      vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+      vim.keymap.set('n', '<leader>du', dapui.toggle, { desc = 'Debug: Toggle UI' })
 
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close

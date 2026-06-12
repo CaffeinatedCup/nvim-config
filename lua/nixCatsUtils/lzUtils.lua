@@ -1,10 +1,9 @@
-local M = {}
 -- An lze handler that enables a spec based on a nixCats category.
 -- Register with: require('lze').register_handlers(require('nixCatsUtils.lzUtils').for_cat)
 -- Usage in specs:
 --   for_cat = "your.cat"
 --   for_cat = { cat = "your.cat", default = bool }
-M.for_cat = {
+local for_cat = {
     spec_field = "for_cat",
     set_lazy = false,
     modify = function(plugin)
@@ -17,4 +16,6 @@ M.for_cat = {
     end,
 }
 
-return M
+return {
+    for_cat = for_cat,
+}

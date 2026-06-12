@@ -76,6 +76,9 @@ require('lze').load {
     for_cat = "rust",
     lsp = {
       filetypes = { "rust" },
+      settings = {
+        ["rust-analyzer"] = { check = { command = "clippy" } },
+      },
     },
   },
   {
@@ -89,6 +92,7 @@ require('lze').load {
     "clangd",
     for_cat = "c",
     lsp = {
+      cmd = { "clangd", "--clang-tidy" },
       filetypes = { "c", "cpp", "objc", "objcpp" },
     },
   },

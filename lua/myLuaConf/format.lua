@@ -10,6 +10,12 @@ require('lze').load {
 
       conform.setup({
         formatters_by_ft = {
+          lua      = { "stylua" },
+          python   = { "ruff_format" },
+          rust     = { "rustfmt" },
+          c        = { "clang_format" },
+          cpp      = { "clang_format" },
+          markdown = { "prettierd" },
         },
       })
 

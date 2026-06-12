@@ -61,8 +61,7 @@ Add an lsp spec to `lua/myLuaConf/LSPs/init.lua` following the existing pattern.
 - `<leader><leader>[/]/l/d` — buffer navigation
 - `<leader>s*` — telescope search
 - `<leader>FF` — format file
-- `<leader>b/B` — DAP breakpoints
-- `F5/F1/F2/F3/F7` — DAP debug controls
+- `<leader>d*` — DAP debug (db/dB breakpoints, dc continue, di/do/dO step, du toggle UI)
 - `gd/gr/gI/K` — LSP navigation
 - `<leader>rn/<leader>ca` — LSP rename/code action
 - `-` — oil.nvim file explorer
